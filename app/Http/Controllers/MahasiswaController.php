@@ -8,83 +8,39 @@ use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $mahasiswas=Mahasiswa::latest()->paginate(5);
-        return view('admin.mahasiswa.index',['mahasiswas'=>$mahasiswas]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('admin.mahasiswa.create');
+        $prodis = Prodi::all();
+        return view('admin.mahasiswa.create', compact('prodis'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nim' => 'required|unique:mahasiswas',
-            'nama_mahasiswa'=> 'required|min:2',
-            'prodi'=> 'required',
-            'angkatan'=> 'required',
-            'status_mahasiswa'=> 'required',
-            'prodi_id'=> 'required',
+        $validatedData = $request->validate([
+            'nim' => 'required|numeric|unique:mahasiswas,nim',
+            'nama_mahasiswa' => 'required|string|max:255',
+            'id_prodi' => 'required|exists:prodis,id', // validasi sesuai dengan primary key 'id' pada tabel 'prodis'
+            'gender' => 'required|in:Laki-laki,Perempuan',
+            'angkatan' => 'required|numeric|digits:4',
+            'status_mahasiswa' => 'required|string|max:255',
         ]);
 
-        Mahasiswa::create($validated);
-        return redirect('admin-mahasiswa');
+        Mahasiswa::create($validatedData);
 
+        return redirect()->view('admin.mahasiswa.index')->with('success', 'Mahasiswa berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function destroy($id)
     {
-        //
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        $mahasiswa->delete();
+
+        return redirect()->route('admin.mahasiswa.index')->with('success', 'Mahasiswa berhasil dihapus.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function index()
     {
-        return view('admin.mahasiswa.edit',['prodis'=>Prodi::all(),'mahasiswa'=>Mahasiswa::find($id)]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $validated = $request->validate([
-            'nim' => 'required',
-            'nama_lengkap'=> 'required|min:2',
-            'tempat_lahir'=> 'required',
-            'tgl_lahir'=> 'required',
-            'email'=> 'required',
-            'prodi_id'=> 'required',
-            'alamat'=> 'nullable',
-        ]);
-
-        Mahasiswa::where('id',$id)->update($validated);
-        return redirect('/admin-mahasiswa')->with('pesan','Data berhasil diupdate');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        Mahasiswa::destroy($id);
-        return redirect('/admin-mahasiswa')->with('pesan','Data berhasil dihapus');
+        $mahasiswas = Mahasiswa::with('prodi')->paginate(10); // menggunakan pagination
+        return view('admin.mahasiswa.index', compact('mahasiswas'));
     }
 }

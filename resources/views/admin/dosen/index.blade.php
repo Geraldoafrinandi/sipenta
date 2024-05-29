@@ -12,36 +12,33 @@
     @endif
 
     <a href="/admin-dosen/create" class="btn btn-primary mb-3">Create Dosen</a>
-<table class="table table-ordered table-striped">
-    <tr>
-        <th>Nik</th>
-        <th>Nama</th>
-        <th>Email</th>
-        <th>No Telepon</th>
-        <th>Prodi</th>
-        <th>Alamat</th>
-        <th>Aksi</th>
-    </tr>
+    <table class="table table-ordered table-striped">
+        <tr>
+            <th>Nama</th>
+            <th>NIDN</th>
+            <th>NIP</th>
+            <th>Gender</th>
+            <th>Prodi</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Aksi</th>
+        </tr>
 
-    @foreach ($dosens as $itemDos)
-    <tr>
-       <td>{{ $dosens->firstItem()+$loop->index }}</td>
-       <td>{{ $itemDos->nama_lengkap }}</td>
-        <td>{{ $itemDos->email }}</td>
-        <td>{{ $itemDos->no_telp }}</td>
-        <td>{{ $itemDos->prodi_id }}</td>
-        <td>{{ $itemDos->alamat }}</td>
-       <td>
-        <a href="/admin-dosen/{{$itemDos->id}}/edit" class="btn btn-success btn-sm">Edit</a>
-        <!-- <a href="" class="btn btn-danger btn-sm">Hapus</a> -->
-        <form action="/admin-dosen/{{$itemDos->id}}" method="post" class="d-inline">
-            @method('DELETE')
-            @csrf
-            <button type="submit" class="btn btn-danger btn-sm d-inline" onclick="return confirm('Yakin akan menghapus data?')">Hapus</button>
-        </form>
-       </td>
-    </tr>
-@endforeach
-</table>
-{{ $dosens->links() }}
+        @foreach ($dosens as $dosen)
+            <tr>
+                <td>{{ $dosen->id_dosen }}</td>
+                <td>{{ $dosen->nama_dosen }}</td>
+                <td>{{ $dosen->nidn }}</td>
+                <td>{{ $dosen->nip }}</td>
+                <td>{{ $$dosen->gender }}</td>
+                <td>{{ $dosen->prodi->nama_prodi }}</td>
+                <td>{{ $$dosen->email }}</td>
+                <td>{{ $$dosen->status }}</td>
+                <td>
+
+                </td>
+            </tr>
+        @endforeach
+    </table>
+    {{ $dosens->links() }}
 @endsection

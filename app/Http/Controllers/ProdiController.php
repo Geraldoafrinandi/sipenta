@@ -2,63 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Prodi;
 use Illuminate\Http\Request;
 
 class ProdiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('admin.prodi');
+        $prodis = Prodi::paginate(10); // Menggunakan pagination
+        return view('admin.prodi.index', compact('prodis'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.prodi.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $validatedData = $request->validate([
+            'nama_prodi' => 'required|string|max:255|unique:prodis,nama_prodi',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Prodi $prodi)
-    {
-        //
-    }
+        Prodi::create($validatedData);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Prodi $prodi)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Prodi $prodi)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Prodi $prodi)
-    {
-        //
+        return redirect()->route('admin.prodi.index')->with('success', 'Prodi berhasil ditambahkan.');
     }
 }

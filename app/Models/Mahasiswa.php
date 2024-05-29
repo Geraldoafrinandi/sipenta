@@ -7,6 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mahasiswa extends Model
 {
+
     use HasFactory;
-    protected $guarded=[];
+
+    protected $table = 'mahasiswas'; // sesuaikan dengan nama tabel di database
+
+    protected $fillable = [
+        'nim',
+        'nama_mahasiswa',
+        'id_prodi',
+        'gender',
+        'angkatan',
+        'status_mahasiswa',
+    ];
+
+    protected $primaryKey = 'id_mahasiswa'; // Primary key yang benar
+
+    public $timestamps = false;
 }

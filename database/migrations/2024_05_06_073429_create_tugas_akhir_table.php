@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('tugas_akhir', function (Blueprint $table) {
             $table->id('id_ta');
             $table->string('nim');
-            $table->string('nidn');
+            $table->string('pembimbing1');
+            $table->string('pembimbing2');
             $table->string('judul');
             $table->string('tgl_pengajuan');
-            $table->string('status_ta');
             $table->timestamps();
         });
     }

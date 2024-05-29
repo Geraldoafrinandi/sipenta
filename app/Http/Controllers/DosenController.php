@@ -13,8 +13,8 @@ class DosenController extends Controller
      */
     public function index()
     {
-        $dosens=Dosen::latest()->paginate(5);
-        return view('admin.dosen.index',['dosens'=>$dosens]);
+        $dosens = Dosen::with('prodi')->paginate(10);
+        return view('admin.dosen.index', compact('dosens'));
     }
 
     /**
@@ -22,7 +22,8 @@ class DosenController extends Controller
      */
     public function create()
     {
-        return view('admin.dosen.create',['prodis'=>Prodi::all()]);
+        $prodis = Prodi::all();
+        return view('admin.dosen.create', compact('prodis'));
     }
 
     /**
@@ -31,17 +32,18 @@ class DosenController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nik' => 'required|unique:dosens',
-            'nama_lengkap'=> 'required|min:2',
-            'email'=> 'required',
-            'no_telp'=> 'required',
-            'prodi_id'=> 'required',
-            'alamat'=> 'nullable',
+            'nama' => 'required|unique:dosens,nama',
+            'nidn' => 'required',
+            'nip' => 'required',
+            'gender' => 'required|in:Laki-laki,Perempuan',
+            'prodi_id' => 'required|exists:prodis,id_prodi', // assuming 'id' is the primary key of 'prodis' table
+            'email' => 'nullable|email',
+            'status' => 'required',
         ]);
 
         Dosen::create($validated);
-        return redirect('admin-dosen');
 
+        return redirect()->route('admin.dosen.index')->with('success', 'Dosen berhasil ditambahkan.');
     }
 
     /**
@@ -49,33 +51,7 @@ class DosenController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        return view('admin.dosen.edit',['prodis'=>Prodi::all(),'dosen'=>Dosen::find($id)]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $validated = $request->validate([
-            'nik' => 'required',
-            'nama_lengkap'=> 'required|min:2',
-            'email'=> 'required',
-            'no_telp'=> 'required',
-            'prodi_id'=> 'required',
-            'alamat'=> 'nullable',
-        ]);
-
-        Dosen::where('id',$id)->update($validated);
-        return redirect('/admin-dosen')->with('pesan','Data berhasil diupdate');
+        // Implementasi jika diperlukan
     }
 
     /**
@@ -84,6 +60,6 @@ class DosenController extends Controller
     public function destroy(string $id)
     {
         Dosen::destroy($id);
-        return redirect('/admin-dosen')->with('pesan','Data berhasil dihapus');
+        return redirect()->route('admin.dosen.index')->with('success', 'Data berhasil dihapus');
     }
 }

@@ -1,45 +1,37 @@
 @extends('admin.main')
+@section('title', 'Dataprodi')
+@section('navMhs', 'active')
 
 @section('content')
-
-
-<h1>Daftar Prodi</h1>
-<div class="row">
-    <div class="col-lg-4">
-    <div class="card" style="width: 18rem;">
-    <img src="/image/logo-tekinfo.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">Manajemen Informatika</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">More</a>
-    </div>
-    </div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Daftar Prodi </h1>
     </div>
 
-    <div class="col-lg-4">
-    <div class="card" style="width: 18rem;">
-    <img src="/image/logo-tekinfo.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">Teknik Komputer</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">More</a>
-    </div>
-    </div>
-    </div>
+    @if (session()->has('succes'))
+        <div class="alert alert-primary" role="alert">
+            {{ session('succes') }}
+        </div>
+    @endif
 
-    <div class="col-lg-4">
-    <div class="card" style="width: 18rem;">
-    <img src="/image/logo-tekinfo.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">Teknologi Rekayasa Perangkat Lunak</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">More</a>
-    </div>
-    </div>
-    </div>
+    <a href="/admin-prodi/create" class="btn btn-primary mb-3">Create Prodi</a>
+    <table class="table table-ordered table-striped">
+        <tr>
+            <th>ID Prodi</th>
+            <th>Nama Prodi</th>
+            <th>Aksi</th>
+        </tr>
+        <tbody>
+            @foreach ($prodis as $prodi)
+                <tr>
+                    <td>{{ $prodi->id_prodi }}</td>
+                    <td>{{ $prodi->nama_prodi }}</td>
+                    <td>
+                        <!-- Form untuk menghapus data -->
 
-
-</div>
-
-
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    {{ $prodis->links() }}
 @endsection
