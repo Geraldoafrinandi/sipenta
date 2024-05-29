@@ -28,15 +28,11 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/admin-mahasiswa', function () {
-    return view('admin-index');
-});
+
 
 Route::get('/backend', function () {
     return view('admin.main');
 })->middleware(('auth'));
-
-
 
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -47,20 +43,26 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 
-Route::resource('/admin-mahasiswa',MahasiswaController::class)->middleware('auth');
-Route::delete('/admin-mahasiswa/{id_mahasiswa}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+Route::get('/admin-mahasiswa', [MahasiswaController::class, 'index'])->middleware('auth');
+Route::get('/admin-mahasiswa/create', [MahasiswaController::class, 'create'])->name('admin.mahasiswa.create');
 Route::post('/admin-mahasiswa', [MahasiswaController::class, 'store'])->name('admin.mahasiswa.store');
+Route::get('/admin/mahasiswa', [MahasiswaController::class, 'index'])->name('admin.mahasiswa.index');
+Route::delete('/admin-mahasiswa/{id_mahasiswa}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
 
 
-Route::get('/admin-dosen', [DosenController::class, 'index'])->name('admin.dosen.index');
+
+Route::get('/admin-dosen', [DosenController::class, 'index'])->middleware('auth');
 Route::get('/admin-dosen/create', [DosenController::class, 'create'])->name('admin.dosen.create');
 Route::post('/admin-dosen', [DosenController::class, 'store'])->name('admin.dosen.store');
+Route::get('/admin/dosen', [DosenController::class, 'index'])->name('admin.dosen.index');
+
 
 
 Route::get('/admin-prodi',[ProdiController::class,'index'])->middleware('auth');
 Route::get('/admin-prodi/create', [ProdiController::class, 'create'])->name('admin.prodi.create');
 Route::post('/admin-prodi', [ProdiController::class, 'store'])->name('admin.prodi.store');
 Route::get('/admin/prodi', [ProdiController::class, 'index'])->name('admin.prodi.index');
+Route::delete('/admin-prodi/{id_prodi}', [ProdiController::class, 'destroy'])->name('prodi.destroy');
 
 
 Route::get('/admin-kaprodi',[KaprodiController::class,'index'])->middleware('auth');

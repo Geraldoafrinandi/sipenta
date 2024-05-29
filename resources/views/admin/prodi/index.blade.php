@@ -27,7 +27,13 @@
                     <td>{{ $prodi->nama_prodi }}</td>
                     <td>
                         <!-- Form untuk menghapus data -->
-
+                        <form action="{{ route('prodi.destroy', $prodi->id_prodi) }}" method="POST"
+                            class="d-inline">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Yakin akan menghapus data?')">Hapus</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

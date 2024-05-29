@@ -6,7 +6,7 @@
     <h1 class="h2">Form Mahasiswa</h1>
 </div>
 <div class="col-6">
-    <form action="{{ route('admin.mahasiswa.store') }}" method="POST">
+    <form action="{{ route('admin-mahasiswa.store') }}" method="POST">
         @csrf
         <div class="mb-3">
             <label class="form-label">NIM</label>
@@ -26,19 +26,14 @@
                 </div>
             @enderror
         </div>
-        <div class="form-group mb-3">
-            <label for="prodi_id" class="mb-2">Prodi:</label>
-            <select class="form-control @error('prodi_id') is-invalid @enderror" id="prodi_id" name="prodi_id">
+        <div class="mb-3">
+            <label for="id_prodi" class="form-label">Prodi</label>
+            <select class="form-control" id="id_prodi" name="id_prodi">
                 <option value="">Pilih Prodi</option>
                 @foreach ($prodis as $prodi)
-                    <option value="{{ $prodi->id_prodi }}" {{ old('prodi_id') == $prodi->id_prodi ? 'selected' : '' }}>{{ $prodi->nama_prodi }}</option>
+                    <option value="{{ $prodi->id }}">{{ $prodi->nama_prodi }}</option>
                 @endforeach
             </select>
-            @error('prodi_id')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
         </div>
         <div class="form-group mb-3">
             <label for="gender" class="mb-2">Gender:</label>

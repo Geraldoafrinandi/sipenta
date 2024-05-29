@@ -7,9 +7,9 @@
         <h1 class="h2">Daftar Mahasiswa TI</h1>
     </div>
 
-    @if (session()->has('pesan'))
+    @if (session()->has('success'))
         <div class="alert alert-primary" role="alert">
-            {{ session('pesan') }}
+            {{ session('success') }}
         </div>
     @endif
 
@@ -28,10 +28,10 @@
             <tr>
                 <td>{{ $mahasiswa->nim }}</td>
                 <td>{{ $mahasiswa->nama_mahasiswa }}</td>
-                <td>{{ $mahasiswa->prodi }}</td>
+                <td>{{ $mahasiswa->id_prodi->nama_prodi }}</td>
                 <td>{{ $mahasiswa->angkatan }}</td>
                 <td>{{ $mahasiswa->gender }}</td>
-                <td>{{ $mahasiswa->status_mahasiswa }}</td>
+                <td>{{ $mahasiswa->status }}</td>
                 <td>
 
                     <!-- Form untuk menghapus data -->

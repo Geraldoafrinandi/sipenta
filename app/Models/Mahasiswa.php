@@ -16,9 +16,9 @@ class Mahasiswa extends Model
         'nim',
         'nama_mahasiswa',
         'id_prodi',
-        'gender',
         'angkatan',
-        'status_mahasiswa',
+        'gender',
+        'status',
     ];
 
     protected $primaryKey = 'id_mahasiswa'; // Primary key yang benar
