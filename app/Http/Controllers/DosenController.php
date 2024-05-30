@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dosen;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class DosenController extends Controller
 {
@@ -13,6 +14,11 @@ class DosenController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows('isKaprodi')){
+            abort(403);
+        }
+
+
         $dosens = Dosen::with('prodi')->paginate(10);
         return view('admin.dosen.index', compact('dosens'));
     }

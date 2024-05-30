@@ -4,6 +4,7 @@ use App\Models\Sidang;
 use App\Models\Kaprodi;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProdiController;
@@ -76,4 +77,5 @@ Route::get('/admin-ruangan',[RuanganController::class,'index'])->middleware('aut
 
 Route::get('/admin-tugas_akhir',[Tugas_akhirController::class,'index'])->middleware('auth');
 
-
+Route::get('/admin/assign-role', [RoleController::class, 'showAssignRoleForm'])->name('assign.role');
+Route::post('/admin/assign-role', [RoleController::class, 'assignRole']);
