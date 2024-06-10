@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Prodi;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Mahasiswa extends Model
 {
@@ -11,17 +12,27 @@ class Mahasiswa extends Model
     use HasFactory;
 
     protected $table = 'mahasiswas'; // sesuaikan dengan nama tabel di database
+    protected $primaryKey = 'id'; // Primary key yang benar
 
     protected $fillable = [
         'nim',
         'nama_mahasiswa',
-        'id_prodi',
-        'angkatan',
+        'prodi_id',
         'gender',
-        'status',
+        'angkatan',
+        'status_mahasiswa',
     ];
 
-    protected $primaryKey = 'id_mahasiswa'; // Primary key yang benar
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class, 'prodi_id', 'id_prodi');
+    }
+
+    public function sidangs()
+    {
+        return $this->hasMany(Sidang::class, 'nim', 'nim');
+    }
+
 
     public $timestamps = false;
 }

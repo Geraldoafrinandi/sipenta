@@ -41,6 +41,9 @@
                     <div>
                         <input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password">
                     </div>
+
+
+
                     <div>
                         <button type="submit">
                             <span>{{ __('Register') }}</span>
@@ -54,6 +57,7 @@
         </div>
         <div class="theme-btn-container"></div>
     </section>
+
 </body>
 
 </html>

@@ -7,56 +7,48 @@ use Illuminate\Http\Request;
 
 class RuanganController extends Controller
 {
+    /**
+     * Menampilkan daftar ruangan.
+     */
     public function index()
     {
-        return view('admin.ruangan');
+        $ruangan = Ruangan::latest()->paginate(10);
+
+        return view('admin.ruangan.index', ['ruangans' => $ruangan]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan form untuk membuat ruangan baru.
      */
     public function create()
     {
-        //
+        return view('admin.ruangan.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan ruangan baru ke dalam database.
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'no_ruangan' => 'required|string|max:50',
+            'jam_sidang' => 'required|string|max:50',
+        ]);
+
+        Ruangan::create($validated);
+
+        return redirect()->route('admin.ruangan.index')
+                         ->with('success', 'Ruangan berhasil ditambahkan.');
     }
 
     /**
-     * Display the specified resource.
+     * Menghapus ruangan dari database.
      */
-    public function show(Ruangan $ruangan)
+    public function destroy($id)
     {
-        //
-    }
+        Ruangan::destroy($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ruangan $ruangan)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Ruangan $ruangan)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Ruangan $ruangan)
-    {
-        //
+        return redirect()->route('admin.ruangan.index')
+                         ->with('success', 'Ruangan berhasil dihapus.');
     }
 }

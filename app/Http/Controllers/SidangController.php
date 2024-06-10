@@ -3,60 +3,119 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sidang;
+use App\Models\Ruangan;
+use App\Models\Mahasiswa;
+use App\Models\Tugas_akhir;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SidangController extends Controller
 {
     public function index()
     {
-        return view('admin.sidang');
+        $sidangs = Sidang::all();
+        return view('admin.sidang.index', compact('sidangs'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $tugasAkhirs = Tugas_akhir::all();
+        $mahasiswas = Mahasiswa::all();
+        $ruangans = Ruangan::all();
+        return view('admin.sidang.create', compact('tugasAkhirs', 'mahasiswas', 'ruangans'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+        $request->validate([
+            'ta_id' => 'required|string|exists:tugas_akhirs,id_ta',
+            'nim' => 'required',
+            'ketua_sidang' => 'required|string|max:50',
+            'penguji1' => 'required|string|max:50',
+            'penguji2' => 'required|string|max:50',
+            'sekretaris' => 'required|string|max:50',
+            'ruangan_id' => 'required|string|exists:ruangans,id_ruangan',
+            'status_sidang' => 'nullable|string|max:20',
+        ]);
+
+        return redirect()->route('admin.sidang.index')
+                         ->with('success', 'Sidang berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Sidang $sidang)
     {
-        //
+        $sidang->load('tugas_akhirs', 'ruangans');
+        return view('admin.sidang.show', compact('sidang'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Sidang $sidang)
     {
-        //
+        $tugasAkhirs = Tugas_akhir::all();
+        $mahasiswas = Mahasiswa::all();
+        $ruangans = Ruangan::all();
+        return view('admin.sidang.edit', compact('sidang', 'tugasAkhirs', 'mahasiswas', 'ruangans'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Sidang $sidang)
     {
-        //
+        $request->validate([
+            'ta_id' => 'required|exists:tugas_akhirs,id_ta',
+            'nim' => 'required',
+            'ketua_sidang' => 'required|string|max:50',
+            'penguji1' => 'required|string|max:50',
+            'penguji2' => 'required|string|max:50',
+            'sekretaris' => 'required|string|max:50',
+            'ruangan_id' => 'required|string|exists:ruangans,id_ruangan',
+            'status_sidang' => 'nullable|string|max:20',
+        ]);
+
+        return redirect()->route('admin.sidang.index')->with('success', 'Sidang berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Sidang $sidang)
     {
-        //
+        $sidang->delete();
+        return redirect()->route('admin.sidang.index')->with('success', 'Sidang berhasil dihapus.');
+    }
+
+    public function getDataRuangan($ruanganId)
+    {
+        try {
+            $ruangan = Ruangan::findOrFail($ruanganId);
+            $nama_ruangan = $ruangan->ruangan->nama_ruangan;
+
+            return $nama_ruangan;
+        } catch (ModelNotFoundException $e) {
+            // Handle jika data dosen tidak ditemukan
+            return "Data Ruangan tidak ditemukan.";
+        }
+    }
+
+    public function getDataTa($taId)
+    {
+        try {
+            $ta = Tugas_akhir::findOrFail($taId);
+            $judulTa = $ta->tugasAkhir->judul;
+
+            return $judulTa;
+        } catch (ModelNotFoundException $e) {
+            // Handle jika data dosen tidak ditemukan
+            return "Data Ruangan tidak ditemukan.";
+        }
+    }
+
+    // Fungsi untuk menampilkan detail Sidang berdasarkan ta_id
+    public function showByTaId($taId)
+    {
+        $sidang = Sidang::where('ta_id', $taId)->first();
+
+        if ($sidang) {
+            // Sidang ditemukan, lakukan apa yang diperlukan
+            return view('sidang.detail', compact('sidang'));
+        } else {
+            // Sidang tidak ditemukan, mungkin tampilkan pesan atau redirect
+            return redirect()->route('admin.sidang.index')->with('error', 'Sidang tidak ditemukan.');
+        }
     }
 }

@@ -12,8 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('dosens', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_dosen');
+            $table->string('nama');
+            $table->string('nidn')->unique();
+            $table->string('nip')->unique();
+            $table->enum('gender', ['Laki-laki', 'Perempuan']);
+            $table->unsignedBigInteger('prodi_id'); // Menggunakan tipe yang sesuai dengan primary key di tabel prodis
+            $table->string('email')->unique();
+            $table->enum('status', ['Aktif', 'Tidak Aktif']);
             $table->timestamps();
+
+            // Definisi foreign key constraint
+            $table->foreign('prodi_id')->references('id_prodi')->on('prodis')->onDelete('cascade');
         });
     }
 

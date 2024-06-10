@@ -29,12 +29,5 @@
         <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
     </div>
 
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <form action="/logout" method="post">
-                @csrf
-                <button class="nav-link px-3" type="submit">Logout</button>
-            </form>
-        </li>
-    </ul>
+
 </header>

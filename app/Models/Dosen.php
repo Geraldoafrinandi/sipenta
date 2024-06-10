@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
+
 class Dosen extends Model
 {
     use HasFactory;
@@ -12,13 +14,22 @@ class Dosen extends Model
     protected $fillable = [
         'nama',
         'nidn',
-        'nip',
         'gender',
-        'id_prodi',
+        'prodi_id',
         'email',
         'status',
     ];
 
+
+
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class, 'prodi_id', 'id_prodi');
+    }
+
     protected $primaryKey = 'id_dosen'; // Primary key yang benar
     protected $guarded = [];
+
+
 }
+

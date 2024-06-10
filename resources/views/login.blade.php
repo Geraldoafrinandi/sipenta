@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
     <link href="{{ asset('landing_page/css/login.css') }}" rel="stylesheet">
+    <link href="{{ asset('landing_page/css/loading.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -14,9 +15,16 @@
         <div class="login-container">
             <div class="circle circle-one"></div>
             <div class="form-container">
-                <form method="POST" action="{{ route('login') }}">
+                <form id="login-form" method="POST" action="{{ route('login') }}">
                     @csrf
                     <h1 class="opacity">LOGIN</h1>
+
+                    <!-- Notifikasi sukses registrasi -->
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
                     <!-- Display Errors -->
                     @if($errors->any())

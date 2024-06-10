@@ -7,56 +7,57 @@ use App\Models\Tugas_akhir;
 
 class Tugas_akhirController extends Controller
 {
-    public function index()
-    {
-        return view('admin.tugas_akhir');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.tugas_akhir.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nim' => 'required|string|max:20',
+            'pembimbing1' => 'required|string|max:100',
+            'pembimbing2' => 'required|string|max:100',
+            'judul' => 'required|string',
+            'tgl_pengajuan' => 'required|date',
+        ]);
+
+        Tugas_akhir::create($validatedData);
+
+        return redirect()->route('tugas_akhir.index')->with('success', 'Tugas Akhir berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tugas_akhir $tugas_akhir)
+    public function index()
     {
-        //
+        $tugasAkhir = Tugas_akhir::all();
+        return view('admin.tugas_akhir.index', compact('tugasAkhir'));
+    }
+    public function edit($id)
+    {
+        $tugasAkhir = Tugas_akhir::findOrFail($id);
+        return view('admin.tugas_akhir.edit', compact('tugasAkhir'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tugas_akhir $tugas_akhir)
+    public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'nim' => 'required|string|max:20',
+            'pembimbing1' => 'required|string|max:100',
+            'pembimbing2' => 'required|string|max:100',
+            'judul' => 'required|string',
+            'tgl_pengajuan' => 'required|date',
+        ]);
+
+        Tugas_akhir::where('id_ta', $id)->update($validatedData);
+
+        return redirect()->route('tugas_akhir.index')->with('success', 'Tugas Akhir berhasil diupdate.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Tugas_akhir $tugas_akhir)
+    public function destroy($id)
     {
-        //
-    }
+        $tugasAkhir = Tugas_akhir::findOrFail($id);
+        $tugasAkhir->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Tugas_akhir $tugas_akhir)
-    {
-        //
+        return redirect()->route('tugas_akhir.index')->with('success', 'Tugas Akhir berhasil dihapus.');
     }
 }

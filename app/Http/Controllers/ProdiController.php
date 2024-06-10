@@ -29,6 +29,8 @@ class ProdiController extends Controller
         return redirect()->route('admin.prodi.index')->with('success', 'Prodi berhasil ditambahkan.');
     }
 
+
+
     public function destroy($id)
     {
         $prodi = Prodi::findOrFail($id);

@@ -26,15 +26,6 @@
                 </div>
             @enderror
         </div>
-        <div class="mb-3">
-            <label for="nip" class="form-label">NIP</label>
-            <input type="number" class="form-control @error('nip') is-invalid @enderror" id="nip" name="nip" value="{{ old('nip')}}">
-            @error('nip')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
-        </div>
         <div class="form-group mb-3">
             <label for="gender" class="mb-2">Gender:</label>
             <select class="form-control @error('gender') is-invalid @enderror" id="gender" name="gender">
@@ -48,15 +39,17 @@
                 </div>
             @enderror
         </div>
-        <div class="form-group mb-3">
-            <label for="id_prodi" class="mb-2">Prodi</label>
-            <select class="form-control @error('id_prodi') is-invalid @enderror" id="id_prodi" name="id_prodi">
-                <option value="">Pilih Prodi</option>
-                @foreach($prodis as $prodi)
-                    <option value="{{ $prodi->id_prodi }}" {{ old('id_prodi') == $prodi->id_prodi ? 'selected' : '' }}>{{ $prodi->nama_prodi }}</option>
+        <div class="mb-3">
+            <label for="prodi_id" class="form-label">Prodi</label>
+            <select name="prodi_id" class="form-select @error('prodi_id') is-invalid
+            @enderror">
+                <option value="">--Pilih Prodi--</option>
+                @foreach ($prodis as $prodi)
+                    <option value="{{ $prodi->id_prodi }}">{{ $prodi->nama_prodi }}</option>
                 @endforeach
+
             </select>
-            @error('id_prodi')
+            @error('prodi_id')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
