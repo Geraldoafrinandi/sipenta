@@ -72,8 +72,8 @@ Route::get('/dosen/{dosen_id}/prodi', [DosenController::class, 'getNamaProdi']);
 Route::get('/admin-dosen/{id}/edit', [DosenController::class, 'edit'])->name('admin.dosen.edit'); // Rute untuk menampilkan form edit dosen
 Route::put('/admin-dosen/{id}', [DosenController::class, 'update'])->name('admin.dosen.update');// Rute untuk menyimpan perubahan data dosen
 Route::get('/admin-dosen/export/excel', [DosenController::class, 'export_excel'])->name('dosen.export.excel');
-Route::get('admin-dosen/import', [DosenController::class, 'showImportForm'])->name('dosen.import');
-Route::post('admin-dosen/import', [DosenController::class, 'import'])->name('dosen.import.post');
+Route::get('/admin-dosen/import', [DosenController::class, 'showImportForm'])->name('dosen.import');
+Route::post('/admin-dosen/import', [DosenController::class, 'import'])->name('dosen.import.post');
 
 
 

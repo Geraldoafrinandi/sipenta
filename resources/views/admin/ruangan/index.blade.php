@@ -16,13 +16,13 @@
     <a href="/admin-ruangan/create" class="btn btn-primary mb-3">Create Ruangan</a>
     <table class="table table-ordered table-striped">
         <tr>
-            <th>id Ruangan</th>
+            <th>No Ruangan</th>
             <th>Jam Sidang</th>
             <th>Aksi</th>
         </tr>
         @foreach ($ruangans as $ruangan)
         <tr>
-            <td>{{ $ruangan->id_ruangan }}</td>
+            <td>{{ $ruangan->no_ruangan }}</td>
             <td>{{ $ruangan->jam_sidang }}</td>
 
             <td>

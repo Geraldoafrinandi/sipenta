@@ -9,19 +9,17 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 class ImportDosen implements ToModel, WithHeadingRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         return new Dosen([
             'nama' => $row['nama'],
             'nidn' => $row['nidn'],
-            'nip' => $row['nip'],
             'gender' => $row['gender'],
-            'jabatan' => $row['jabatan'],
-            'prodi_id' => $row['prodi'],
+            'prodi_id' => $row['prodi_id'],
             'email' => $row['email'],
             'status' => $row['status'],
         ]);

@@ -6,6 +6,7 @@ use App\Models\Prodi;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use App\Exports\ExportMahasiswa;
+use App\Imports\ImportMahasiswa;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -13,20 +14,24 @@ class MahasiswaController extends Controller
 {
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $mahasiswas = Mahasiswa::latest()->paginate(10);
+        $perPage = $request->get('perPage', 10);
+        $mahasiswas = Mahasiswa::latest()->paginate($perPage);
         return view('admin.mahasiswa.index', ['mahasiswas' => $mahasiswas]);
     }
 
-    public function export_excel(){
-        return Excel::download(new ExportMahasiswa,"mahasiswa.xlsx");
+    public function export_excel()
+    {
+        return Excel::download(new ExportMahasiswa(), "mahasiswa.xlsx");
     }
+
 
     public function showImportForm()
     {
-        return view('admin.dosen.import');
+        return view('admin.mahasiswa.import');
     }
+
 
     public function import(Request $request)
     {
@@ -34,9 +39,29 @@ class MahasiswaController extends Controller
             'file' => 'required|mimes:xls,xlsx',
         ]);
 
-        Excel::import(new ImportMahasiswa, $request->file('file'));
+        $file = $request->file('file');
+        $rows = Excel::toArray(new ImportMahasiswa, $file);
 
-        return redirect()->back()->with('success', 'Data Dosen berhasil diimpor.');
+        foreach ($rows[0] as $row) {
+            $prodiId = $row['prodi_id'];
+            $prodi = prodi::find($prodiId);
+
+            if (!$prodi) {
+                continue;
+            }
+
+            Mahasiswa::create([
+                'nim' => $row['nim'],
+                'nama_mahasiswa' => $row['nama_mahasiswa'],
+                'prodi_id' => $prodiId,
+                'gender' => $row['gender'],
+                'angkatan' => $row['angkatan'],
+                'status_mahasiswa' => $row['status_mahasiswa'],
+            ]);
+        }
+
+
+        return redirect()->route('admin.mahasiswa.index')->with('success', 'Data Mahasiswa berhasil diimpor.');
     }
 
     public function create()

@@ -46,9 +46,9 @@ class RuanganController extends Controller
      */
     public function destroy($id)
     {
-        Ruangan::destroy($id);
+        Ruangan::where('id_ruangan', $id)->delete();
 
-        return redirect()->route('admin.ruangan.index')
-                         ->with('success', 'Ruangan berhasil dihapus.');
+    return redirect()->route('admin.ruangan.index')
+                     ->with('success', 'Ruangan berhasil dihapus.');
     }
 }

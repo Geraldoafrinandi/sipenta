@@ -24,7 +24,8 @@
 
     @include('layouts.footer')
 </body>
-<script src="/landing_page/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="/landing_page/js/main.js"></script>
 
 </html>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dosen;
 use App\Models\Prodi;
 use App\Exports\ExportDosen;
+use App\Imports\ImportDosen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Maatwebsite\Excel\Facades\Excel;
@@ -15,19 +16,25 @@ class DosenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        if (!Gate::allows('isAdmin')){
-            abort(403);
+        if (!Gate::allows('isAdmin') && !Gate::allows('isKaprodi')) {
+            abort(403, 'Maaf, Anda tidak memiliki akses');
         }
+
+        $perPage = $request->get('perPage', 10); // Default 10 jika tidak ada parameter
+        $dosens = Dosen::paginate($perPage);
+        return view('admin.dosen.index', compact('dosens'));
+
 
 
         $dosen = Dosen::latest()->paginate(10);
-        return view('admin.dosen.index', ['dosens'=>$dosen]);
+        return view('admin.dosen.index', ['dosens' => $dosen]);
     }
 
-    public function export_excel(){
-        return Excel::download(new ExportDosen,"dosen.xlsx");
+    public function export_excel()
+    {
+        return Excel::download(new ExportDosen(), "dosen.xlsx");
     }
 
     public function showImportForm()
@@ -41,10 +48,33 @@ class DosenController extends Controller
             'file' => 'required|mimes:xls,xlsx',
         ]);
 
-        Excel::import(new ImportDosen, $request->file('file'));
+        $file = $request->file('file');
+        $rows = Excel::toArray(new ImportDosen, $file);
 
-        return redirect()->back()->with('success', 'Data Dosen berhasil diimpor.');
+        foreach ($rows[0] as $row) {
+            $prodiId = $row['prodi_id'];
+            $prodi = Prodi::find($prodiId);
+
+            if (!$prodi) {
+                // Handle the case where the prodi_id is not found in the prodis table
+                // You can log an error, skip the row, or throw an exception
+                // For this example, let's just skip the row
+                continue;
+            }
+
+            Dosen::create([
+                'nama' => $row['nama'],
+                'nidn' => $row['nidn'],
+                'gender' => $row['gender'],
+                'prodi_id' => $prodiId,
+                'email' => $row['email'],
+                'status' => $row['status'],
+            ]);
+        }
+
+        return redirect()->route('admin.dosen.index')->with('success', 'Data Dosen berhasil diimpor.');
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -66,7 +96,6 @@ class DosenController extends Controller
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'nidn' => 'required|string|max:50',
-            'nip' => 'required|string|max:50',
             'gender' => 'required|in:Laki-laki,Perempuan',
             'prodi_id' => 'required|string|exists:prodis,id_prodi',
             'email' => 'required|email|max:255',

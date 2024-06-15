@@ -8,10 +8,11 @@
     </div>
 
     <div class="mb-2 d-flex justify-content-between">
-        <a href="/admin-mahasiswa/create" class="btn btn-primary mb-3">Create Mahasiswa</a>
+        <a href="/admin-mahasiswa/create" class="btn btn-primary mb-2">Create Mahasiswa</a>
         <div>
-            <a class="btn btn-success" href="{{ url('/admin-mahasiswa/export/excel') }}">Export</a>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">Import</button>
+            <a class="btn btn-success" href="{{ url('/admin-mahasiswa/export/excel') }}">Export</a> <!-- Tidak menggunakan parameter perPage -->
+            <a class="btn btn-primary" href="{{ url('/admin-mahasiswa/import') }}">Import</a> <!-- Tidak menggunakan parameter perPage -->
+            {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">Import</button> --}}
         </div>
     </div>
 
@@ -45,8 +46,21 @@
         </div>
     @endif
 
+    @include('admin.mahasiswa.table', ['mahasiswas' => $mahasiswas])
 
-
-    @include('admin/mahasiswa/table', ['mahasiswas' => $mahasiswas])
-    {{ $mahasiswas->links() }}
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <form method="GET" action="{{ url()->current() }}">
+            <label for="perPage">Show</label>
+            <select id="perPage" name="perPage" onchange="this.form.submit()">
+                <option value="10"{{ request('perPage') == 10 ? ' selected' : '' }}>10</option>
+                <option value="25"{{ request('perPage') == 25 ? ' selected' : '' }}>25</option>
+                <option value="50"{{ request('perPage') == 50 ? ' selected' : '' }}>50</option>
+                <option value="100"{{ request('perPage') == 100 ? ' selected' : '' }}>100</option>
+            </select>
+            <span>entries</span>
+        </form>
+        <div class="pagination">
+            {{ $mahasiswas->appends(['perPage' => request('perPage')])->onEachSide(1)->links('pagination::bootstrap-4') }}
+        </div>
+    </div>
 @endsection

@@ -14,8 +14,7 @@ class ExportDosen implements FromView
 
     public function view():View
     {
-        $dosens = Dosen::latest()->paginate(10);
-        return view('admin.dosen.table', ['dosens' => $dosens]);
-
+            $dosens = Dosen::all(); // Mengambil semua data tanpa pagination
+            return view('admin.dosen.export-table', ['dosens' => $dosens]);
     }
 }
