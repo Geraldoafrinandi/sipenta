@@ -60,4 +60,10 @@ class User extends Authenticatable
         $this->password = Hash::make($newPassword);
         $this->save();
     }
+
+     // Metode untuk memeriksa peran pengguna
+     public function hasRole($role)
+     {
+         return $this->role === $role; // Misalnya, periksa apakah role user sama dengan role yang diharapkan
+     }
 }

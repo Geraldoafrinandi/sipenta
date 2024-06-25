@@ -15,9 +15,10 @@ class Tugas_akhir extends Model
 
     protected $fillable = [
         'nim',
-        'pembimbing1',
-        'pembimbing2',
+        'pembimbing1_id',
+        'pembimbing2_id',
         'judul',
+        'dokumen',
         'tgl_pengajuan'
     ];
 
@@ -27,4 +28,20 @@ class Tugas_akhir extends Model
     {
         return $this->hasMany(Sidang::class, 'ta_id');
     }
+
+   public function validasi_ta()
+    {
+        return $this->hasMany(Tugas_akhir::class,'ta_id');
+   }
+
+   public function pembimbing1()
+   {
+       return $this->belongsTo(Dosen::class, 'pembimbing1_id');
+   }
+
+   public function pembimbing2()
+   {
+       return $this->belongsTo(Dosen::class, 'pembimbing2_id');
+   }
 }
+

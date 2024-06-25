@@ -7,9 +7,19 @@
         <h1 class="h2">Tambah Tugas Akhir Baru</h1>
     </div>
 
+    @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('tugas_akhir.store') }}" method="POST">
+            <form action="{{ route('tugas_akhir.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
@@ -18,18 +28,33 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="pembimbing1" class="form-label">Pembimbing 1</label>
-                    <input type="text" class="form-control" id="pembimbing1" name="pembimbing1" required>
+                    <label for="pembimbing1_id" class="form-label">Pembimbing 1</label>
+                    <select class="form-select" id="pembimbing1_id" name="pembimbing1_id" required>
+                        <option value="">Pilih Pembimbing 1</option>
+                        @foreach ($dosens as $dosen)
+                            <option value="{{ $dosen->id_dosen }}">{{ $dosen->nama }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="mb-3">
-                    <label for="pembimbing2" class="form-label">Pembimbing 2</label>
-                    <input type="text" class="form-control" id="pembimbing2" name="pembimbing2" required>
+                    <label for="pembimbing2_id" class="form-label">Pembimbing 2</label>
+                    <select class="form-select" id="pembimbing2_id" name="pembimbing2_id">
+                        <option value="">Pilih Pembimbing 2</option>
+                        @foreach ($dosens as $dosen)
+                            <option value="{{ $dosen->id_dosen }}">{{ $dosen->nama }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="mb-3">
                     <label for="judul" class="form-label">Judul</label>
                     <input type="text" class="form-control" id="judul" name="judul" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="dokumen" class="form-label">Upload Dokumen</label>
+                    <input type="file" class="form-control" id="dokumen" name="dokumen" required>
                 </div>
 
                 <div class="mb-3">

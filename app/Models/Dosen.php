@@ -27,6 +27,8 @@ class Dosen extends Model
         return $this->belongsTo(Prodi::class, 'prodi_id', 'id_prodi');
     }
 
+
+
     protected $primaryKey = 'id_dosen'; // Primary key yang benar
     protected $guarded = [];
 

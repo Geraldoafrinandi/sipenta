@@ -16,9 +16,18 @@ class MahasiswaController extends Controller
 
     public function index(Request $request)
     {
-        $perPage = $request->get('perPage', 10);
-        $mahasiswas = Mahasiswa::latest()->paginate($perPage);
-        return view('admin.mahasiswa.index', ['mahasiswas' => $mahasiswas]);
+        $keyword = $request->input('search');
+        $perPage = $request->get('perPage'); // Default 10 jika tidak ada parameter
+
+        $query = Mahasiswa::query();
+
+        if ($keyword) {
+            $query->where('nama_mahasiswa', 'LIKE', "%$keyword%");
+        }
+
+        $mahasiswas = $query->paginate($perPage);
+
+        return view('admin.mahasiswa.index', compact('mahasiswas'));
     }
 
     public function export_excel()

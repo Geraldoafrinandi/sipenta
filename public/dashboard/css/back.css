@@ -46,3 +46,78 @@
 .navbar .form-control {
   padding: .75rem 1rem;
 }
+
+/* CSS untuk foto profil */
+.profile-picture {
+    width: 36px; /* Lebar foto profil */
+    height: 36px; /* Tinggi foto profil */
+    border-radius: 50%; /* Agar foto profil berbentuk bulat */
+    object-fit: cover; /* Memastikan foto terpampang dengan baik */
+    border: 2px solid #fff; /* Garis tepi putih */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Efek bayangan */
+}
+
+/* Gaya dropdown untuk nama pengguna */
+.navbar-nav .dropdown-menu {
+    background-color: #343a40; /* Warna latar belakang dropdown */
+}
+
+.navbar-nav .dropdown-item {
+    color: #ffffff; /* Warna teks dropdown */
+}
+
+.navbar-nav .dropdown-item:hover {
+    background-color: #495057; /* Warna latar belakang saat hover */
+}
+
+/* Animasi fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+
+/* CSS untuk menyesuaikan tampilan dropdown saat ditekan */
+
+.dropdown-menu {
+    background-color: #343a40; /* Warna latar belakang dropdown */
+    border: none; /* Hapus border bawaan */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Shadow dropdown */
+    padding: 0.5rem 0; /* Padding di dalam dropdown */
+    font-size: 0.875rem; /* Ukuran teks */
+    width: 10rem; /* Lebar dropdown */
+}
+
+.dropdown-menu a.dropdown-item {
+    color: #adb5bd; /* Warna teks dropdown item */
+    padding: 0.5rem 1rem; /* Padding di dalam item dropdown */
+    transition: background-color 0.3s; /* Transisi saat dihover */
+}
+
+.dropdown-menu a.dropdown-item:hover {
+    background-color: #495057; /* Warna latar belakang saat item dropdown dihover */
+    color: #fff; /* Warna teks saat item dropdown dihover */
+}
+
+.dropdown-divider {
+    border-top-color: #6c757d; /* Warna garis pembatas dropdown */
+    margin: 0.5rem 0; /* Margin pada garis pembatas */
+}
+
+/* Teks pada link dropdown */
+.dropdown-menu a.dropdown-item {
+    text-decoration: none;
+}
+
+/* Atur jarak antar item */
+.dropdown-menu {
+    padding: 0.5rem 0;
+}

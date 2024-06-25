@@ -33,6 +33,10 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="mb-3">
+                    <label for="tanggal_sidang">Tanggal Sidang</label>
+                    <input type="date" class="form-control" id="tanggal_sidang" name="tanggal_sidang">
+                </div>
 
                 <button type="submit" class="btn btn-primary">Simpan</button>
                 <a href="{{ route('admin.ruangan.index') }}" class="btn btn-secondary">Batal</a>

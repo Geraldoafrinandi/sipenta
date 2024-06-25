@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dosen;
 use App\Models\Prodi;
+use App\Models\Sidang;
 use App\Exports\ExportDosen;
 use App\Imports\ImportDosen;
 use Illuminate\Http\Request;
@@ -18,18 +19,18 @@ class DosenController extends Controller
      */
     public function index(Request $request)
     {
-        if (!Gate::allows('isAdmin') && !Gate::allows('isKaprodi')) {
-            abort(403, 'Maaf, Anda tidak memiliki akses');
+        $keyword = $request->input('search');
+        $perPage = $request->get('perPage', 10); // Default 10 jika tidak ada parameter
+
+        $query = Dosen::query();
+
+        if ($keyword) {
+            $query->where('nama', 'LIKE', "%$keyword%");
         }
 
-        $perPage = $request->get('perPage', 10); // Default 10 jika tidak ada parameter
-        $dosens = Dosen::paginate($perPage);
+        $dosens = $query->paginate($perPage);
+
         return view('admin.dosen.index', compact('dosens'));
-
-
-
-        $dosen = Dosen::latest()->paginate(10);
-        return view('admin.dosen.index', ['dosens' => $dosen]);
     }
 
     public function export_excel()
@@ -183,5 +184,14 @@ class DosenController extends Controller
             // Handle jika data dosen tidak ditemukan
             return "Data dosen tidak ditemukan.";
         }
+    }
+
+    public function dosenDenganJadwalSidang()
+    {
+        // Dapatkan semua jadwal sidang yang sudah ada
+        $sidangs = Sidang::all(); // Gantilah dengan cara pengambilan data yang sesuai
+
+        // Tampilkan nama dosen yang terlibat dalam jadwal sidang
+        return view('admin.dosen.dosen-jadwal', ['sidangs' => $sidangs]);
     }
 }

@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('nim')->unique();
             $table->string('nama_mahasiswa');
-            $table->unsignedBigInteger('id_prodi');
+            $table->unsignedBigInteger('prodi_id');
             $table->string('gender');
             $table->integer('angkatan');
             $table->string('status_mahasiswa');
             $table->timestamps();
 
-            $table->foreign('id_prodi')->references('id_prodi')->on('prodis')->onDelete('cascade');
+            $table->foreign('prodi_id')->references('id_prodi')->on('prodis')->onDelete('cascade');
         });
     }
 

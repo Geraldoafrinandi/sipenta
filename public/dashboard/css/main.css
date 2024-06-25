@@ -11279,3 +11279,21 @@
   body.sidebar-toggled footer.sticky-footer {
     width: 100%;
   }
+
+
+
+    /* Animasi fade-in */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+

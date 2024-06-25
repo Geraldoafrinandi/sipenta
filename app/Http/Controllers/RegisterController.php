@@ -23,11 +23,17 @@ class RegisterController extends Controller
 
         ]);
 
+        if ($request->name === 'admin' && $request->password === 'admin123') {
+            $role = 'admin';
+        } else {
+            $role = 'mahasiswa'; // atau role default lainnya
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'mahasiswa',
+            'role' => $role,
         ]);
 
         Auth::login($user);

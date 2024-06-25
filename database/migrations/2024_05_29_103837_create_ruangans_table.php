@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id('id_ruangan');
             $table->string('no_ruangan');
             $table->string('jam_sidang');
+            $table->date('tanggal_sidang');
+            $table->boolean('keterangan')->default(false);
             $table->timestamps();
         });
     }

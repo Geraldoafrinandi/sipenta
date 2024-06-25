@@ -12,7 +12,9 @@
         <p class="card-text"><strong>Nama:</strong> {{ $user->name }}</p>
         <p class="card-text"><strong>Email:</strong> {{ $user->email }}</p>
         <p class="card-text"><strong>Password:</strong> **********</p> <!-- Tidak menampilkan password secara langsung -->
-        <a href="{{ route('admin.change.password') }}" class="btn btn-primary">Ganti Password</a>
+        <a href="{{ route('admin.change.password') }}" class="btn btn-primary mb-3">Ganti Password</a>
+
+
     </div>
 </div>
 

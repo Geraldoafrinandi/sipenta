@@ -18,12 +18,14 @@
         <tr>
             <th>No Ruangan</th>
             <th>Jam Sidang</th>
+            <th>Tanggal Sidang</th>
             <th>Aksi</th>
         </tr>
         @foreach ($ruangans as $ruangan)
         <tr>
             <td>{{ $ruangan->no_ruangan }}</td>
             <td>{{ $ruangan->jam_sidang }}</td>
+            <td>{{ \Carbon\Carbon::parse($ruangan->tanggal_sidang)->format('d-m-Y') }}</td>
 
             <td>
                 <!-- Form untuk menghapus data -->

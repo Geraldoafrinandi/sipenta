@@ -33,6 +33,7 @@ class RuanganController extends Controller
         $validated = $request->validate([
             'no_ruangan' => 'required|string|max:50',
             'jam_sidang' => 'required|string|max:50',
+            'tanggal_sidang' => 'required|date',
         ]);
 
         Ruangan::create($validated);
@@ -50,5 +51,15 @@ class RuanganController extends Controller
 
     return redirect()->route('admin.ruangan.index')
                      ->with('success', 'Ruangan berhasil dihapus.');
+    }
+
+    public function availableRooms()
+    {
+        // Mengambil ruangan yang belum digunakan dalam tabel sidang
+        $ruangans = Ruangan::whereNotIn('id_ruangan', function ($query) {
+            $query->select('ruangan_id')->from('sidangs');
+        })->get();
+
+        return view('admin.ruangan.available', compact('ruangans'));
     }
 }

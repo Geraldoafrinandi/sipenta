@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id('id_dosen');
             $table->string('nama');
             $table->string('nidn')->unique();
-            $table->string('nip')->unique();
             $table->enum('gender', ['Laki-laki', 'Perempuan']);
             $table->unsignedBigInteger('prodi_id'); // Menggunakan tipe yang sesuai dengan primary key di tabel prodis
             $table->string('email')->unique();
@@ -26,6 +25,7 @@ return new class extends Migration
             $table->foreign('prodi_id')->references('id_prodi')->on('prodis')->onDelete('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.

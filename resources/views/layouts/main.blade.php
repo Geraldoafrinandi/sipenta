@@ -12,6 +12,7 @@
 </head>
 
 <body>
+
     @include('layouts.header')
 
     {{-- main content --}}
@@ -26,6 +27,8 @@
 </body>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
 <script src="/landing_page/js/main.js"></script>
 
 </html>

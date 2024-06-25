@@ -9,6 +9,13 @@ use App\Models\User; // Pastikan model User sudah di-import
 
 class UserController extends Controller
 {
+
+    public function index()
+    {
+        $users = User::all();
+
+        return view('admin.user.index', compact('users'));
+    }
     public function changePassword(Request $request)
     {
         // Validasi input
@@ -30,11 +37,51 @@ class UserController extends Controller
         $user->save();
 
         // Redirect dengan pesan sukses
-        return redirect()->route('admin.change.password')->with('success', 'Password berhasil diubah');
+        return redirect()->route('admin.user.index')->with('success', 'Password berhasil diubah');
     }
 
     public function showChangePasswordForm()
     {
         return view('admin.change_password'); // Sesuaikan dengan nama blade template yang Anda gunakan
     }
+
+    public function create()
+    {
+        return view('admin.user.create');
+    }
+
+public function store(Request $request)
+{
+    // Validasi input
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8|confirmed',
+        'role' => 'required|in:admin,mahasiswa,dosen', // pastikan role yang di-input valid
+    ]);
+
+    // Simpan user baru ke dalam database
+    $user = new User([
+        'name' => $request->input('name'),
+        'email' => $request->input('email'),
+        'password' => Hash::make($request->input('password')),
+        'role' => $request->input('role'), // ambil role dari input form
+    ]);
+    $user->save();
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('admin.user.index')->with('success', 'User berhasil ditambahkan');
+}
+
+public function destroy($id)
+{
+    // Cari user berdasarkan ID
+    $user = User::findOrFail($id);
+
+    // Hapus user
+    $user->delete();
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('admin.user.index')->with('success', 'User berhasil dihapus');
+}
 }

@@ -14,29 +14,52 @@ class Sidang extends Model
     protected $fillable = [
         'ta_id',
         'nim',
-        'ketua_sidang',
-        'penguji1',
-        'penguji2',
-        'sekretaris',
+        'ketua_sidang_id',
+        'penguji1_id',
+        'penguji2_id',
+        'sekretaris_id',
         'ruangan_id',
+        'tanggal',
         'status_sidang',
+        'total_nilai',
     ];
 
     // Relasi ke tabel TugasAkhir
-    public function tugas_akhirs()
+    public function tugas_akhir()
     {
-        return $this->belongsTo(Tugas_akhir::class, 'ta_id');
+        return $this->belongsTo(Tugas_akhir::class, 'ta_id','id_ta');
     }
 
-    // Relasi ke tabel Mahasiswa
-    public function mahasiswas()
+    public function mahasiswa()
     {
-        return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
+        return $this->belongsTo(Mahasiswa::class, 'nim','nim');
     }
 
-    // Relasi ke tabel Ruangan
-    public function ruangans()
+    public function ruangan()
     {
-        return $this->belongsTo(Ruangan::class, 'ruangan_id','id');
+        return $this->belongsTo(Ruangan::class, 'ruangan_id','id_ruangan');
+    }
+
+    public function ketuaSidang()
+    {
+        return $this->belongsTo(Dosen::class, 'ketua_sidang_id');
+    }
+
+    public function penguji1()
+    {
+        return $this->belongsTo(Dosen::class, 'penguji1_id');
+    }
+
+    public function penguji2()
+    {
+        return $this->belongsTo(Dosen::class, 'penguji2_id');
+    }
+    public function sekretaris()
+    {
+        return $this->belongsTo(Dosen::class, 'sekretaris_id');
+    }
+    public function penilaians()
+    {
+        return $this->hasMany(Penilaian::class, 'sidang_id', 'id');
     }
 }

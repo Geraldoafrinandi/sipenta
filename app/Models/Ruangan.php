@@ -14,6 +14,8 @@ class Ruangan extends Model
     protected $fillable = [
         'no_ruangan',
         'jam_sidang',
+        'tanggal_sidang',
+        'keterangan',
     ];
 
     public function sidangs()

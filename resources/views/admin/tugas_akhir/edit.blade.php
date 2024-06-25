@@ -9,7 +9,7 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('tugas_akhir.update', $tugasAkhir->id_ta) }}" method="POST">
+            <form action="{{ route('tugas_akhir.update', $tugasAkhir->id_ta) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -31,6 +31,11 @@
                 <div class="mb-3">
                     <label for="judul" class="form-label">Judul</label>
                     <input type="text" class="form-control" id="judul" name="judul" value="{{ $tugasAkhir->judul }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="dokumen" class="form-label">Upload Dokumen</label>
+                    <input type="file" class="form-control" id="dokumen" name="dokumen" required>
                 </div>
 
                 <div class="mb-3">

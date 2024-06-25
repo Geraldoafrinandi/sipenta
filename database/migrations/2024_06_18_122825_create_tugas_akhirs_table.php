@@ -14,13 +14,20 @@ return new class extends Migration
         Schema::create('tugas_akhirs', function (Blueprint $table) {
             $table->id('id_ta'); // Menggunakan method 'id()' untuk membuat primary key 'id' dengan tipe unsigned big integer
             $table->string('nim')->unique(); // Kolom 'nim' unik
-            $table->string('pembimbing1');
-            $table->string('pembimbing2')->nullable(); // Pembimbing 2 bisa kosong (nullable)
+            $table->unsignedBigInteger('pembimbing1_id');
+            $table->unsignedBigInteger('pembimbing2_id'); // Pembimbing 2 bisa kosong (nullable)
             $table->string('judul');
+            $table->string('dokumen');
             $table->date('tgl_pengajuan'); // Menggunakan tipe 'date' untuk tanggal pengajuan
             $table->timestamps(); // Timestamps untuk created_at dan updated_at
+
+            $table->foreign('pembimbing1_id')->references('id_dosen')->on('dosens')->onDelete('cascade');
+            $table->foreign('pembimbing2_id')->references('id_dosen')->on('dosens')->onDelete('cascade');
         });
+
+
     }
+
 
     /**
      * Reverse the migrations.
@@ -30,4 +37,3 @@ return new class extends Migration
         Schema::dropIfExists('tugas_akhirs');
     }
 };
-
