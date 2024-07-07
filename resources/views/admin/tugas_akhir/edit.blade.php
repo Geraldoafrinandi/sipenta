@@ -6,6 +6,15 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Edit Tugas Akhir</h1>
     </div>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div class="card">
         <div class="card-body">
@@ -19,13 +28,32 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="pembimbing1" class="form-label">Pembimbing 1</label>
-                    <input type="text" class="form-control" id="pembimbing1" name="pembimbing1" value="{{ $tugasAkhir->pembimbing1 }}" required>
+                    <label for="nama_mahasiswa" class="form-label">Nama Mahasiswa</label>
+                    <input type="text" class="form-control" id="nama_mahasiswa" name="nama_mahasiswa" value="{{ $tugasAkhir->nama_mahasiswa }}" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="pembimbing2" class="form-label">Pembimbing 2</label>
-                    <input type="text" class="form-control" id="pembimbing2" name="pembimbing2" value="{{ $tugasAkhir->pembimbing2 }}" required>
+                    <label for="pembimbing1_id" class="form-label">Pembimbing 1</label>
+                    <select class="form-control" id="pembimbing1_id" name="pembimbing1_id" required>
+                        @foreach($dosens as $dosen)
+                            <option value="{{ $dosen->id_dosen }}" {{
+                            $dosen->id_dosen == $tugasAkhir->pembimbing1_id  ? 'selected' : '' }}>
+                                {{ $dosen->nama }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pembimbing2_id" class="form-label">Pembimbing 2</label>
+                    <select class="form-control" id="pembimbing2_id" name="pembimbing2_id">
+                        <option value="">Pilih Pembimbing 2 (Opsional)</option>
+                        @foreach($dosens as $dosen)
+                            <option value="{{ $dosen->id_dosen }}" {{ $tugasAkhir->pembimbing2_id == $dosen->id_dosen ? 'selected' : '' }}>
+                                {{ $dosen->nama }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="mb-3">
@@ -33,10 +61,10 @@
                     <input type="text" class="form-control" id="judul" name="judul" value="{{ $tugasAkhir->judul }}" required>
                 </div>
 
-                <div class="mb-3">
-                    <label for="dokumen" class="form-label">Upload Dokumen</label>
+                {{-- <div class="mb-3">
+                    <label for="dokumen_pkl" class="form-label">Upload Dokumen PKL</label>
                     <input type="file" class="form-control" id="dokumen" name="dokumen" required>
-                </div>
+                </div> --}}
 
                 <div class="mb-3">
                     <label for="tgl_pengajuan" class="form-label">Tanggal Pengajuan</label>

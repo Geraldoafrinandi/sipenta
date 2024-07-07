@@ -9,6 +9,16 @@
         <h1 class="h2">Tambah User Baru</h1>
     </div>
 
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
     <div class="card">
         <div class="card-body">
             <form action="{{ route('admin.user.store') }}" method="POST">
@@ -18,6 +28,13 @@
                     <label for="name" class="form-label">Nama</label>
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required>
                     @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mb-3">
+                    <label for="nim" class="form-label">NIDN </label>
+                    <input type="text" class="form-control @error('nim') is-invalid @enderror" id="nim" name="nim" value="{{ old('nim') }}">
+                    @error('nim')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
@@ -48,6 +65,7 @@
                     <select class="form-control @error('role') is-invalid @enderror" id="role" name="role" required>
                         <option value="">---Pilih Role---</option>
                         <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="kaprodi" {{ old('role') == 'kaprodi' ? 'selected' : '' }}>Kaprodi</option>
                         <option value="dosen" {{ old('role') == 'dosen' ? 'selected' : '' }}>Dosen</option>
                         <option value="mahasiswa" {{ old('role') == 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
                     </select>

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('nim')->unique()->nullable(); // Add NIM as a unique field
             $table->string('role')->default('mahasiswa');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

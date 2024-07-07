@@ -7,6 +7,8 @@
         <h1 class="h2">Daftar Prodi </h1>
     </div>
 
+    <h1 class="text-center mb-3">Daftar Prodi</h1>
+
     @if (session()->has('succes'))
         <div class="alert alert-primary" role="alert">
             {{ session('succes') }}
@@ -16,14 +18,12 @@
     <a href="/admin-prodi/create" class="btn btn-primary mb-3">Create Prodi</a>
     <table class="table table-ordered table-striped">
         <tr>
-            <th>ID Prodi</th>
             <th>Nama Prodi</th>
             <th>Aksi</th>
         </tr>
         <tbody>
             @foreach ($prodis as $prodi)
                 <tr>
-                    <td>{{ $prodi->id_prodi }}</td>
                     <td>{{ $prodi->nama_prodi }}</td>
                     <td>
                         <!-- Form untuk menghapus data -->

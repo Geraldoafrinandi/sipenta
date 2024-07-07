@@ -15,7 +15,7 @@
         <div class="login-container">
             <div class="circle circle-one"></div>
             <div class="form-container">
-                <form id="login-form" method="POST" action="{{ route('login') }}">
+                <form id="login-form" method="POST" action="{{ route('login.authenticate') }}">
                     @csrf
                     <h1 class="opacity">LOGIN</h1>
 
@@ -38,7 +38,7 @@
                     @endif
 
                     <div>
-                        <input id="email" class="block mt-1 w-full" type="email" name="email" required autofocus autocomplete="email" placeholder="Email" value="{{ old('email') }}">
+                        <input id="identifier" class="block mt-1 w-full" type="text" name="identifier" required autofocus autocomplete="identifier" placeholder="Masukan Email atau NIM" value="{{ old('identifier') }}">
                     </div>
                     <div>
                         <input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" placeholder="Password">

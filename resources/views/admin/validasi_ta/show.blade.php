@@ -8,7 +8,7 @@
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Mahasiswa: {{ $validasiTa->mahasiswa->nim }} - {{ $validasiTa->mahasiswa->nama_mahasiswa }}</h5>
+            <h5 class="card-title">Mahasiswa: {{ $validasiTa->tugasAkhir->nama_mahasiswa }} - {{ $validasiTa->tugasAkhir->nim }}</h5>
             <p class="card-text">Tugas Akhir: {{ $validasiTa->tugasAkhir->judul }}</p>
             <p class="card-text">Status Validasi: {{ $validasiTa->status_validasi }}</p>
             <p class="card-text">Tanggal Validasi: {{ $validasiTa->tanggal_validasi }}</p>

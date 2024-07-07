@@ -36,13 +36,14 @@
                         <input id="email" class="block mt-1 w-full" type="email" name="email" required autocomplete="email" placeholder="Email" value="{{ old('email') }}">
                     </div>
                     <div>
+                        <input id="nim" class="block mt-1 w-full" type="text" name="nim" autocomplete="nim" placeholder="NIM" value="{{ old('nim') }}">
+                    </div>
+                    <div>
                         <input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" placeholder="Password">
                     </div>
                     <div>
                         <input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password">
                     </div>
-
-
 
                     <div>
                         <button type="submit">
@@ -57,7 +58,6 @@
         </div>
         <div class="theme-btn-container"></div>
     </section>
-
 </body>
 
 </html>

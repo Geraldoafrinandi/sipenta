@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'nim',
         'password',
         'role',
     ];
@@ -65,5 +66,15 @@ class User extends Authenticatable
      public function hasRole($role)
      {
          return $this->role === $role; // Misalnya, periksa apakah role user sama dengan role yang diharapkan
+     }
+
+     public function tugasAkhirPembimbing1()
+     {
+         return $this->hasMany(Tugas_akhir::class, 'pembimbing1_id');
+     }
+
+     public function tugasAkhirPembimbing2()
+     {
+         return $this->hasMany(Tugas_akhir::class, 'pembimbing2_id');
      }
 }

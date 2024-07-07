@@ -22,11 +22,14 @@
         <div class="mb-3">
             <label for="mahasiswa_id">Mahasiswa</label>
             <select name="mahasiswa_id" id="mahasiswa_id" class="form-control">
-                @foreach($mahasiswas as $mahasiswa)
-                    <option value="{{ $mahasiswa->id }}" {{ $mahasiswa->id == $validasiTa->id_mahasiswa ? 'selected' : '' }}>{{ $mahasiswa->nama_mahasiswa }}</option>
+                @foreach($tugasAkhirs as $tugasAkhir)
+                    <option value="{{ $tugasAkhir->nim }}" {{ $tugasAkhir->nim == $validasiTa->mahasiswa_id ? 'selected' : '' }}>
+                        {{ $tugasAkhir->nama_mahasiswa }}
+                    </option>
                 @endforeach
             </select>
         </div>
+
         <div class="mb-3">
             <label for="ta_id">Tugas Akhir</label>
             <select name="ta_id" id="ta_id" class="form-control">

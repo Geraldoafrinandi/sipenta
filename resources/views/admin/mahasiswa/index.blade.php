@@ -3,18 +3,27 @@
 @section('navMhs', 'active')
 
 @section('content')
+
+    @if (session()->has('succes'))
+        <div class="alert alert-primary" role="alert">
+            {{ session('succes') }}
+        </div>
+    @endif
+
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Daftar Mahasiswa TI</h1>
     </div>
 
 
+    <h1 class="text-center mb-3">Daftar Mahasiswa TI</h1>
 
     <div class="mb-2 d-flex justify-content-between">
         <a href="/admin-mahasiswa/create" class="btn btn-primary mb-2">Create Mahasiswa</a>
         <div>
-            <a class="btn btn-success" href="{{ url('/admin-mahasiswa/export/excel') }}">Export</a> <!-- Tidak menggunakan parameter perPage -->
-            <a class="btn btn-primary" href="{{ url('/admin-mahasiswa/import') }}">Import</a> <!-- Tidak menggunakan parameter perPage -->
-            {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">Import</button> --}}
+            <a class="btn btn-success" href="{{ url('/admin-mahasiswa/export/excel') }}">Export</a>
+            <!-- Tidak menggunakan parameter perPage -->
+            {{-- <a class="btn btn-primary" href="{{ url('/admin-mahasiswa/import') }}">Import</a> <!-- Tidak menggunakan parameter perPage --> --}}
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">Import</button>
         </div>
     </div>
 

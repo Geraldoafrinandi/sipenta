@@ -19,10 +19,7 @@ class ValidasiTa extends Model
         'catatan',
     ];
 
-    public function mahasiswa()
-    {
-        return $this->belongsTo(Mahasiswa::class, 'mahasiswa_id');
-    }
+
 
     // Definisikan relasi dengan TugasAkhir jika diperlukan
     public function tugasAkhir()

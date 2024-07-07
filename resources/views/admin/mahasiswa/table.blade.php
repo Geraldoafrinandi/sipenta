@@ -7,6 +7,7 @@
 
 <table class="table table-ordered table-striped">
     <tr>
+        <th>No</th>
         <th>NIM</th>
         <th>Nama Mahasiswa</th>
         <th>Prodi</th>
@@ -17,6 +18,7 @@
     </tr>
     @foreach ($mahasiswas as $mahasiswa)
         <tr>
+            <td>{{ $loop->iteration }}</td>
             <td>{{ $mahasiswa->nim }}</td>
             <td>{{ $mahasiswa->nama_mahasiswa }}</td>
             <td>{{ $mahasiswa->prodi->nama_prodi}}</td>

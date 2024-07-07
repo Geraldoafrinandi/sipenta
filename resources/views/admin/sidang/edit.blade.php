@@ -33,8 +33,8 @@
             <label for="nim" class="form-label">NIM Mahasiswa</label>
             <select name="nim" id="nim" class="form-control" required>
                 <option value="" disabled>Pilih NIM Mahasiswa</option>
-                @foreach($mahasiswas as $mahasiswa)
-                    <option value="{{ $mahasiswa->nim }}" {{ $mahasiswa->nim == $sidang->nim ? 'selected' : '' }}>{{ $mahasiswa->nim }} - {{ $mahasiswa->nama_mahasiswa }}</option>
+                @foreach($tugasAkhirs as $tugasAkhir)
+                    <option value="{{ $tugasAkhir->nim }}" {{ $tugasAkhir->nim == $sidang->nim ? 'selected' : '' }}>{{ $tugasAkhir->nim }}</option>
                 @endforeach
             </select>
         </div>
@@ -74,6 +74,23 @@
                 @endforeach
             </select>
         </div>
+        <div class="mb-3">
+            <label for="pembimbing1_id">Pembimbing 1</label>
+            <select name="pembimbing1_id" id="pembimbing1_id" class="form-control">
+                @foreach($dosens as $dosen)
+                    <option value="{{ $dosen->id_dosen }}" {{ $dosen->id_dosen == $sidang->pembimbing1_id ? 'selected' : '' }}>{{ $dosen->nama }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="pembimbing2_id">Pembimbing 2</label>
+            <select name="pembimbing2_id" id="pembimbing2_id" class="form-control">
+                @foreach($dosens as $dosen)
+                    <option value="{{ $dosen->id_dosen }}" {{ $dosen->id_dosen == $sidang->pembimbing2_id ? 'selected' : '' }}>{{ $dosen->nama }}</option>
+                @endforeach
+            </select>
+        </div>
 
         <div class="mb-3">
             <label for="ruangan_id" class="form-label">Ruangan</label>
@@ -86,8 +103,20 @@
         </div>
 
         <div class="mb-3">
+            <label for="jam_sidang_id" class="form-label">Jam Sidang</label>
+            <select name="jam_sidang_id" id="jam_sidang_id" class="form-control" required>
+                <option value="" disabled>Pilih Jam Sidang</option>
+                @foreach($ruangans as $ruangan)
+                    <option value="{{ $ruangan->id_ruangan }}" {{ $ruangan->id_ruangan == $sidang->jam_sidang_id ? 'selected' : '' }}>{{ $ruangan->jam_sidang }}</option>
+                @endforeach
+            </select>
+        </div>
+
+
+
+        <div class="mb-3">
             <label for="tanggal" class="form-label">Tanggal</label>
-            <input type="date" name="tanggal" id="tanggal" class="form-control" value="{{ $data->tanggal }}" required>
+            <input type="date" name="tanggal" id="tanggal" class="form-control" value="{{ $sidang->tanggal }}" required>
         </div>
 
         <div class="mb-3">

@@ -1,145 +1,266 @@
-<div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
-    <div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu"
-        aria-labelledby="sidebarMenuLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="sidebarMenuLabel">Sipenta</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+<!-- Sidebar Start -->
+<aside class="left-sidebar">
+    <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+            <a href="/admin-backend" class="text-nowrap logo-img">
+                <img src="{{ asset('dashboard') }}/images/TI.png" width="200" height="75" alt="" />
+            </a>
+            <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+                <i class="ti ti-x fs-8"></i>
+            </div>
         </div>
-        <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
-            <ul class="nav flex-column">
-                @if (
-                    (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'mahasiswa'|| Auth::user()->role == 'dosen')) ||
-                        Auth::user()->role == 'kaprodi')
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2 {{ request()->is('admin-dashboard') ? 'active' : '' }}"
-                            href="{{ route('admin.dashboard') }}">
-                            <svg class="bi">
-                                <use xlink:href="#house-fill" />
-                            </svg>
-                            Dashboard
-                        </a>
-                @endif
-                </li>
-                @if (
-                    (Auth::check() && (Auth::user()->role == 'dosen' || Auth::user()->role == 'admin')) ||
-                        Auth::user()->role == 'kaprodi')
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2 {{ request()->is('admin-mahasiswa') ? 'active' : '' }}"
-                            href="{{ route('admin.mahasiswa.index') }}">
-                            <svg class="bi">
-                                <use xlink:href="#house-fill" />
-                            </svg>
-                            Mahasiswa
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar=>
+            <ul id="sidebarnav">
+                <!-- Kaprodi -->
+                @if (Auth::check() && Auth::user()->role == 'kaprodi')
+                    <li class="nav-small-cap">
+                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">Home</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('admin-dashboard') ? 'active' : '' }}"
+                            href="{{ route('admin.dashboard') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-layout"></i>
+                            </span>
+                            <span class="hide-menu">Dashboard</span>
                         </a>
                     </li>
-                @endif
-                @if (
-                    (Auth::check() && Auth::user()->role == 'dosen') ||
-                        Auth::user()->role == 'admin' ||
-                        Auth::user()->role == 'kaprodi')
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2 {{ request()->is('admin-prodi') ? 'active' : '' }}"
-                            href="{{ route('admin.prodi.index') }}">
-                            <svg class="bi">
-                                <use xlink:href="#cart" />
-                            </svg>
-                            Prodi
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('admin-mahasiswa') ? 'active' : '' }}"
+                            href="{{ route('admin.mahasiswa.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-user"></i>
+                            </span>
+                            <span class="hide-menu">Mahasiswa</span>
                         </a>
                     </li>
-                @endif
-                @if (
-                    (Auth::check() && Auth::user()->role == 'admin') ||
-                        Auth::user()->role == 'kaprodi')
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2 {{ request()->is('admin-ruangan') ? 'active' : '' }}"
-                            href="{{ route('admin.ruangan.index') }}">
-                            <svg class="bi">
-                                <use xlink:href="#people" />
-                            </svg>
-                            Ruangan
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('admin-dosen') ? 'active' : '' }}"
+                            href="{{ route('admin.dosen.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-user"></i>
+                            </span>
+                            <span class="hide-menu">Dosen</span>
                         </a>
                     </li>
-                @endif
-                @if (
-                    (Auth::check() && Auth::user()->role == 'admin') ||
-                        Auth::user()->role == 'kaprodi')
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2 {{ request()->is('admin-dosen') ? 'active' : '' }}"
-                            href="{{ route('admin.dosen.index') }}">
-                            <svg class="bi">
-                                <use xlink:href="#people" />
-                            </svg>
-                            Dosen
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('admin-prodi') ? 'active' : '' }}"
+                            href="{{ route('admin.prodi.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-list"></i>
+                            </span>
+                            <span class="hide-menu">Prodi</span>
                         </a>
                     </li>
-                @endif
-                @if (
-                    (Auth::check() && Auth::user()->role == 'dosen') ||
-                        Auth::user()->role == 'admin' ||
-                        Auth::user()->role == 'mahasiswa')
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2 {{ request()->is('admin-tugas_akhir') ? 'active' : '' }}"
-                            href="{{ route('tugas_akhir.index') }}">
-                            <svg class="bi">
-                                <use xlink:href="#graph-up" />
-                            </svg>
-                            Tugas Akhir
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('admin-ruangan') ? 'active' : '' }}"
+                            href="{{ route('admin.ruangan.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-home"></i>
+                            </span>
+                            <span class="hide-menu">Ruangan</span>
                         </a>
                     </li>
-                @endif
-                @if (
-                    (Auth::check() && Auth::user()->role == 'dosen') ||
-                        Auth::user()->role == 'admin' ||
-                        Auth::user()->role == 'kaprodi')
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2 {{ request()->is('admin-sidang') ? 'active' : '' }}"
-                            href="{{ route('admin.sidang.index') }}">
-                            <svg class="bi">
-                                <use xlink:href="#puzzle" />
-                            </svg>
-                            Sidang
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('admin.tugas_akhir.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-book"></i>
+                            </span>
+                            <span class="hide-menu">Daftar Sidang</span>
                         </a>
                     </li>
-                @endif
-                @if (
-                    (Auth::check() && Auth::user()->role == 'dosen') ||
-                        Auth::user()->role == 'admin' ||
-                        Auth::user()->role == 'kaprodi')
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2 {{ request()->is('admin-validasi_ta') ? 'active' : '' }}"
-                            href="{{ route('validasi_ta.index') }}">
-                            <svg class="bi">
-                                <use xlink:href="#puzzle" />
-                            </svg>
-                            Validasi Tugas Akhir
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('admin-sidang') ? 'active' : '' }}"
+                            href="{{ route('admin.sidang.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-book"></i>
+                            </span>
+                            <span class="hide-menu">Penjadwalan Sidang</span>
                         </a>
                     </li>
-                @endif
-            </ul>
+                    @php
+                        // Cek apakah ada data untuk validasi_ta
+                        $hasValidasiTA = \App\Models\ValidasiTA::count() > 0;
+                        // Cek apakah ada data untuk validasi_proposal
+                        $hasValidasiProposal = \App\Models\ValidasiProposal::count() > 0;
+                    @endphp
+                    @if ($hasValidasiTA)
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('validasi_ta.index') }}" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-book"></i>
+                                </span>
+                                <span class="hide-menu">Validasi Tugas Akhir</span>
+                            </a>
+                        </li>
+                    @endif
 
-            <hr class="my-3">
+                    @if ($hasValidasiProposal)
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="{{ route('validasi_proposal.index') }}"
+                                aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-book"></i>
+                                </span>
+                                <span class="hide-menu">Validasi Proposal</span>
+                            </a>
+                        </li>
+                    @endif
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('admin-penilaian') ? 'active' : '' }}"
+                            href="{{ route('admin.penilaian.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-book"></i>
+                            </span>
+                            <span class="hide-menu">Penilaian</span>
+                        </a>
+                    </li>
+                @endif
 
-            <ul class="nav flex-column mb-auto">
+                <!-- Admin -->
                 @if (Auth::check() && Auth::user()->role == 'admin')
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('admin.user.index') }}">
-                            <svg class="bi">
-                                <use xlink:href="#puzzle" />
-                            </svg>
-                            User
+                    <li class="nav-small-cap">
+                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">Home</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/admin-user" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-login"></i>
+                            </span>
+                            <span class="hide-menu">User</span>
                         </a>
                     </li>
                 @endif
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"">
 
-                        <svg class="bi">
-                            <use xlink:href="#door-closed" />
-                        </svg>
-                        Logout
+                <!-- Dosen -->
+                @if (Auth::check() && Auth::user()->role == 'dosen')
+
+                    <li class="nav-small-cap">
+                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">Home</span>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('admin-dashboard') ? 'active' : '' }}"
+                            href="{{ route('dosen.home') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-layout"></i>
+                            </span>
+                            <span class="hide-menu">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('admin.tugas_akhir.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-book"></i>
+                            </span>
+                            <span class="hide-menu">Daftar Sidang</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('admin-sidang') ? 'active' : '' }}"
+                            href="{{ route('admin.sidang.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-book"></i>
+                            </span>
+                            <span class="hide-menu">Penjadwalan Sidang</span>
+                        </a>
+                    </li>
+                    @php
+                    // Cek apakah ada data untuk validasi_ta
+                    $hasValidasiTA = \App\Models\ValidasiTA::count() > 0;
+                    // Cek apakah ada data untuk validasi_proposal
+                    $hasValidasiProposal = \App\Models\ValidasiProposal::count() > 0;
+                @endphp
+                @if ($hasValidasiTA)
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('validasi_ta.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-book"></i>
+                            </span>
+                            <span class="hide-menu">Validasi Tugas Akhir</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if ($hasValidasiProposal)
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('validasi_proposal.index') }}"
+                            aria-expanded="false">
+                            <span>
+                                <i class="ti ti-book"></i>
+                            </span>
+                            <span class="hide-menu">Validasi Proposal</span>
+                        </a>
+                    </li>
+                @endif
+                    {{-- <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('validasi_ta.index') }}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-book"></i>
+                        </span>
+                        <span class="hide-menu">Validasi Tugas Akhir</span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="{{ route('validasi_proposal.index') }}" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-book"></i>
+                        </span>
+                        <span class="hide-menu">Validasi Proposal</span>
+                    </a>
+                </li> --}}
+                    {{-- <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('admin-penilaian') ? 'active' : '' }}"
+                            href="{{ route('admin.penilaian.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-book"></i>
+                            </span>
+                            <span class="hide-menu">Penilaian</span>
+                        </a>
+                    </li> --}}
+                @endif
+
+                <!-- Mahasiswa -->
+                @if (Auth::check() && Auth::user()->role == 'mahasiswa')
+                    <li class="nav-small-cap">
+                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">Home</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('admin/dashboard/mahasiswa') ? 'active' : '' }}"
+                            href="{{ route('mahasiswa.home') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-layout"></i>
+                            </span>
+                            <span class="hide-menu">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('admin.tugas_akhir.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-book"></i>
+                            </span>
+                            <span class="hide-menu">Daftar Sidang</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link {{ request()->is('admin-sidang') ? 'active' : '' }}"
+                            href="{{ route('admin.sidang.index') }}" aria-expanded="false">
+                            <span>
+                                <i class="ti ti-book"></i>
+                            </span>
+                            <span class="hide-menu">Penjadwalan Sidang</span>
+                        </a>
+                    </li>
+                @endif
             </ul>
-        </div>
+        </nav>
+        <!-- End Sidebar navigation -->
     </div>
-</div>
+    <!-- End Sidebar scroll-->
+</aside>
+<!-- Sidebar End -->

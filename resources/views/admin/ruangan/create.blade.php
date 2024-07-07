@@ -7,6 +7,7 @@
         <h1 class="h2">Tambah Ruangan Baru</h1>
     </div>
 
+
     <div class="card">
         <div class="card-body">
             <form action="{{ route('admin.ruangan.store') }}" method="POST">

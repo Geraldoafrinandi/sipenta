@@ -32,6 +32,10 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(Sidang::class, 'nim', 'nim');
     }
+    public function tugasAkhir()
+    {
+        return $this->hasMany(Tugas_akhir::class, 'nim','nim');
+    }
 
 
     public $timestamps = false;

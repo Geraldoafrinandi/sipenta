@@ -16,6 +16,7 @@ class MahasiswaController extends Controller
 
     public function index(Request $request)
     {
+
         $keyword = $request->input('search');
         $perPage = $request->get('perPage'); // Default 10 jika tidak ada parameter
 

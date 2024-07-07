@@ -28,6 +28,11 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="nama_mahasiswa" class="form-label">Nama Mahasiswa</label>
+                    <input type="text" class="form-control" id="nama_mahasiswa" name="nama_mahasiswa" required>
+                </div>
+
+                <div class="mb-3">
                     <label for="pembimbing1_id" class="form-label">Pembimbing 1</label>
                     <select class="form-select" id="pembimbing1_id" name="pembimbing1_id" required>
                         <option value="">Pilih Pembimbing 1</option>
@@ -53,8 +58,20 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="dokumen" class="form-label">Upload Dokumen</label>
-                    <input type="file" class="form-control" id="dokumen" name="dokumen" required>
+                    <label for="dokumen_pkl" class="form-label">Upload Dokumen PKL</label>
+                    <input type="file" class="form-control" id="dokumen_pkl" name="dokumen_pkl" required>
+                </div>
+                <div class="mb-3">
+                    <label for="lembar_bimbingan" class="form-label">Upload Lembar Bimbingan</label>
+                    <input type="file" class="form-control" id="lembar_bimbingan" name="lembar_bimbingan" required>
+                </div>
+                <div class="mb-3">
+                    <label for="proposal" class="form-label">Upload Dokumen Proposal</label>
+                    <input type="file" class="form-control" id="proposal" name="proposal" required>
+                </div>
+                <div class="mb-3">
+                    <label for="laporan_ta" class="form-label">Upload Dokumen Laporan Tugas Akhir</label>
+                    <input type="file" class="form-control" id="laporan_ta" name="laporan_ta" required>
                 </div>
 
                 <div class="mb-3">

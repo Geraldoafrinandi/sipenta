@@ -5,12 +5,20 @@
         <h1 class="h2">Daftar Dosen TI</h1>
     </div>
 
+    <h1 class="text-center">Daftar Dosen TI</h1>
+
+    @if (session()->has('succes'))
+    <div class="alert alert-primary" role="alert">
+        {{ session('succes') }}
+    </div>
+@endif
+
     <div class="mb-2 d-flex justify-content-between">
         <a href="/admin-dosen/create" class="btn btn-primary mb-2">Create Dosen</a>
         <div>
             <a class="btn btn-success" href="{{ url('/admin-dosen/export/excel') }}">Export</a>
-            <a class="btn btn-primary" href="{{ url('/admin-dosen/import') }}">Import</a>
-            {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">Import</button> --}}
+            {{-- <a class="btn btn-primary" href="{{ url('/admin-dosen/import') }}">Import</a> --}}
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#importModal">Import</button>
         </div>
     </div>
 

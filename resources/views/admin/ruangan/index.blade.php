@@ -7,6 +7,8 @@
         <h1 class="h2">Daftar Ruangan TI</h1>
     </div>
 
+    <h1 class="text-center"> Daftar Ruangan TI</h1>
+
     @if (session()->has('success'))
         <div class="alert alert-primary" role="alert">
             {{ session('success') }}

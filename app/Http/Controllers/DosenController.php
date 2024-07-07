@@ -19,6 +19,8 @@ class DosenController extends Controller
      */
     public function index(Request $request)
     {
+
+
         $keyword = $request->input('search');
         $perPage = $request->get('perPage', 10); // Default 10 jika tidak ada parameter
 

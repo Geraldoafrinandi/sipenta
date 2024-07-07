@@ -1,10 +1,11 @@
-<!-- resources/views/validasi_ta/create.blade.php -->
-
 @extends('admin.main')
+@section('title', 'Validasi Tugas Akhir')
+@section('navMhs', 'active')
 
 @section('content')
-<div class="container">
-    <h1>Tambah Validasi Tugas Akhir</h1>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Validasi Tugas Akhir</h1>
+    </div>
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -16,57 +17,40 @@
         </div>
     @endif
 
-    <form action="{{ route('validasi_ta.store') }}" method="POST" id="validasiForm">
+    <form action="{{ route('validasi_ta.store') }}" method="POST">
         @csrf
         <div class="mb-3">
-            <label for="ta_id">Tugas Akhir</label>
-            <select name="ta_id" id="ta_id" class="form-control" required>
-                <option value="" disabled selected>Pilih Tugas Akhir</option>
-                @foreach($tugasAkhirs as $tugasAkhir)
-                    <option value="{{ $tugasAkhir->id_ta }}">{{ $tugasAkhir->judul }}</option>
-                @endforeach
-            </select>
+            <label for="judul">Judul Tugas Akhir</label>
+            <input type="text" class="form-control" id="judul" value="{{ $judul }}" readonly>
         </div>
         <div class="mb-3">
-            <label for="mahasiswa_id">Mahasiswa</label>
-            <select name="mahasiswa_id" id="mahasiswa_id" class="form-control" required>
-                <option value="" disabled selected>Pilih Mahasiswa</option>
-                @if(isset($mahasiswas))
-                    @foreach($mahasiswas as $mahasiswa)
-                        <option value="{{ $mahasiswa->id }}">{{ $mahasiswa->nama_mahasiswa }}</option>
-                    @endforeach
-                @endif
-            </select>
+            <label for="nim">NIM</label>
+            <input type="text" class="form-control" id="nim" name="mahasiswa_id" value="{{ $nim }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="nama_mahasiswa">Nama Mahasiswa</label>
+            <input type="text" class="form-control" id="nama_mahasiswa" value="{{ $namaMahasiswa }}" readonly>
+        </div>
+        <div class="mb-3" hidden>
+            <label  for="ta_id" hidden></label>
+            <input type="hidden" class="form-control" id="ta_id" name="ta_id" value="{{ $taId }}" readonly>
         </div>
         <div class="mb-3">
             <label for="status_validasi">Status Validasi</label>
-            <div>
-                <label>
-                    <input type="radio" name="status_validasi" value="Valid" checked> Valid
-                </label>
-            </div>
-            <div>
-                <label>
-                    <input type="radio" name="status_validasi" value="Tidak Valid"> Tidak Valid
-                </label>
-            </div>
-            <div>
-                <label>
-                    <input type="radio" name="status_validasi" value="Pending"> Pending
-                </label>
-            </div>
+            <select class="form-control" id="status_validasi" name="status_validasi" required>
+                <option value="Valid">Valid</option>
+                <option value="Tidak Valid">Tidak Valid</option>
+                <option value="Pending">Pending</option>
+            </select>
         </div>
         <div class="mb-3">
             <label for="tanggal_validasi">Tanggal Validasi</label>
-            <input type="date" name="tanggal_validasi" id="tanggal_validasi" class="form-control">
+            <input type="date" class="form-control" id="tanggal_validasi" name="tanggal_validasi" required>
         </div>
         <div class="mb-3">
             <label for="catatan">Catatan</label>
-            <textarea name="catatan" id="catatan" class="form-control"></textarea>
+            <textarea class="form-control" id="catatan" name="catatan" rows="3"></textarea>
         </div>
-
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="submit" class="btn btn-primary">Simpan Validasi</button>
     </form>
-</div>
-
 @endsection

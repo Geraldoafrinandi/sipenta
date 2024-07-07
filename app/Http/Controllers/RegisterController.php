@@ -16,22 +16,19 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
+        $role = ($request->name === 'admin' && $request->password === 'admin123') ? 'admin' : 'mahasiswa';
+
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'nullable|string|email|max:255|unique:users',
+            'nim' => $role === 'admin' ? 'nullable|string|max:20|unique:users' : 'required|string|max:20|unique:users',
             'password' => 'required|string|min:8|confirmed',
-
         ]);
-
-        if ($request->name === 'admin' && $request->password === 'admin123') {
-            $role = 'admin';
-        } else {
-            $role = 'mahasiswa'; // atau role default lainnya
-        }
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'nim' => $request->nim,
             'password' => Hash::make($request->password),
             'role' => $role,
         ]);
